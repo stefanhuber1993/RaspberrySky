@@ -1,0 +1,163 @@
+<html>
+  <head>
+    <title>RaspberrySky_v0.1</title>
+    <!-- Angular Imports -->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+
+
+    <script src="main.js"></script>
+
+    <link rel="stylesheet" href="main.css">
+
+    
+  </head>
+
+
+  <body>
+  	<div ng-controller="AppCtrl as ctrl" layout="column" style="height: 500px;" ng-cloak="" class="sidenavdemoCustomSidenav" ng-app="MyApp">
+
+  	  <section layout="row" flex="">
+
+
+  	    <md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4">
+
+
+          <md-toolbar>
+            <h1 class="md-toolbar-tools">Channel Choice</h1>
+          </md-toolbar>
+
+          <p>Select Input Camera</p>
+          <md-radio-group layout="row" ng-model="cameraChoice" >
+            <md-radio-button ng-repeat="n in [-1,0,1,2]" value={{n}} class="md-primary">{{n}}</md-radio-button>
+          </md-radio-group>
+
+          <md-button ng-click="setCamera()" class="md-primary">
+            Select
+          </md-button>
+
+  	      <md-toolbar>
+  	        <h1 class="md-toolbar-tools">Recording</h1>
+  	      </md-toolbar>
+
+          <p>Recording</p>
+          <div layout="row">
+            <md-button ng-click="toggleLeft()" class="md-primary">
+              Start
+            </md-button>
+            <md-button ng-click="toggleLeft()" class="md-warn">
+              Stop
+            </md-button>
+          </div>
+
+
+
+
+          <md-toolbar class="md-warn">
+            <h1 class="md-toolbar-tools">Settings</h1>
+          </md-toolbar>
+
+          <md-content>
+
+            <p>Exposure Time</p>
+            <md-slider-container>
+              <span>1/s</span>
+              <md-slider flex min="2" max="1000" ng-model="exposure" aria-label=exp id="red-slider">
+              </md-slider>
+              <md-input-container>
+                <input flex type="number" ng-model="exposure" aria-label="red" aria-controls="red-slider">
+              </md-input-container>
+            </md-slider-container>
+
+            <p>Send Settings to Server</p>
+            <div layout="row">
+              <md-button ng-click="toggleLeft()" class="md-primary">
+                Send
+              </md-button>
+    	        <md-button ng-click="toggleLeft()" class="md-warn">
+    	          Cancel
+    	        </md-button>
+            </div>
+
+          </md-content>
+
+  	    </md-sidenav>
+
+
+
+
+      </section>
+
+
+        <div layout="row" flex>
+
+        <div flex="20" hide show-sm></div>
+        <div flex="30" hide show-gt-sm></div>
+
+        <div flex>
+ 
+          <md-button ng-click="toggleLeft()" class="md-primary">
+            Options
+          </md-button>
+
+          <div class="md-padding" layout="row" layout-wrap>
+              <div flex="100">
+                  <md-card>
+                    <img ng-if="!ctrl.streamOff" ng-src="/video_feed">
+                  </md-card>
+              </div>
+              <div flex="33">
+                  <md-card>
+                    <img ng-if="!ctrl.streamOff" ng-src="/test_feed">
+                  </md-card>
+              </div>
+              <div flex="33">
+                  <md-card>
+                    <img ng-if="!ctrl.streamOff" ng-src="/test_feed">
+                  </md-card>
+              </div>
+              <div flex="33">
+                  <md-card>
+                    <img ng-if="!ctrl.streamOff" ng-src="/test_feed">
+                  </md-card>
+              </div>
+              <div flex="50">
+                  <md-card>
+                    <img ng-if="!ctrl.streamOff" ng-src="/test_feed">
+                  </md-card>
+              </div>
+              <div flex="50">
+                  <md-card>
+                    <img ng-if="!ctrl.streamOff" ng-src="/test_feed">
+                  </md-card>
+              </div>
+          </div>
+
+        </div>
+
+        <div flex="20" hide show-sm></div>
+        <div flex="30" hide show-gt-sm></div>
+
+        </div>
+
+
+
+
+
+
+
+
+  	</div>
+
+
+
+
+
+
+  </body>
+
+
+</html>

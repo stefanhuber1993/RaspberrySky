@@ -1,2 +1,2 @@
-# RaspberrySky
-WIP - This will give access to a webcam connected to a telescope via a web-interface.
+# Py_WebSurveillance
+Python live browser surveillance with motion detection

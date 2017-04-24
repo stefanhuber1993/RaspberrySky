@@ -1,0 +1,70 @@
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #408080; font-style: italic"># ThreadID: 140495720568576</span>
+File: <span style="color: #BA2121">&quot;/home/ich/anaconda2/lib/python2.7/threading.py&quot;</span>, line <span style="color: #666666">774</span>, <span style="color: #AA22FF; font-weight: bold">in</span> __bootstrap
+  <span style="color: #008000">self</span><span style="color: #666666">.</span>__bootstrap_inner()
+File: <span style="color: #BA2121">&quot;/home/ich/anaconda2/lib/python2.7/threading.py&quot;</span>, line <span style="color: #666666">801</span>, <span style="color: #AA22FF; font-weight: bold">in</span> __bootstrap_inner
+  <span style="color: #008000">self</span><span style="color: #666666">.</span>run()
+File: <span style="color: #BA2121">&quot;/home/ich/anaconda2/lib/python2.7/threading.py&quot;</span>, line <span style="color: #666666">754</span>, <span style="color: #AA22FF; font-weight: bold">in</span> run
+  <span style="color: #008000">self</span><span style="color: #666666">.</span>__target(<span style="color: #666666">*</span><span style="color: #008000">self</span><span style="color: #666666">.</span>__args, <span style="color: #666666">**</span><span style="color: #008000">self</span><span style="color: #666666">.</span>__kwargs)
+File: <span style="color: #BA2121">&quot;/home/ich/anaconda2/lib/python2.7/SocketServer.py&quot;</span>, line <span style="color: #666666">596</span>, <span style="color: #AA22FF; font-weight: bold">in</span> process_request_thread
+  <span style="color: #008000">self</span><span style="color: #666666">.</span>finish_request(request, client_address)
+File: <span style="color: #BA2121">&quot;/home/ich/anaconda2/lib/python2.7/SocketServer.py&quot;</span>, line <span style="color: #666666">331</span>, <span style="color: #AA22FF; font-weight: bold">in</span> finish_request
+  <span style="color: #008000">self</span><span style="color: #666666">.</span>RequestHandlerClass(request, client_address, <span style="color: #008000">self</span>)
+File: <span style="color: #BA2121">&quot;/home/ich/anaconda2/lib/python2.7/SocketServer.py&quot;</span>, line <span style="color: #666666">652</span>, <span style="color: #AA22FF; font-weight: bold">in</span> __init__
+  <span style="color: #008000">self</span><span style="color: #666666">.</span>handle()
+File: <span style="color: #BA2121">&quot;/home/ich/anaconda2/lib/python2.7/site-packages/werkzeug/serving.py&quot;</span>, line <span style="color: #666666">216</span>, <span style="color: #AA22FF; font-weight: bold">in</span> handle
+  rv <span style="color: #666666">=</span> BaseHTTPRequestHandler<span style="color: #666666">.</span>handle(<span style="color: #008000">self</span>)
+File: <span style="color: #BA2121">&quot;/home/ich/anaconda2/lib/python2.7/BaseHTTPServer.py&quot;</span>, line <span style="color: #666666">340</span>, <span style="color: #AA22FF; font-weight: bold">in</span> handle
+  <span style="color: #008000">self</span><span style="color: #666666">.</span>handle_one_request()
+File: <span style="color: #BA2121">&quot;/home/ich/anaconda2/lib/python2.7/site-packages/werkzeug/serving.py&quot;</span>, line <span style="color: #666666">251</span>, <span style="color: #AA22FF; font-weight: bold">in</span> handle_one_request
+  <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>run_wsgi()
+File: <span style="color: #BA2121">&quot;/home/ich/anaconda2/lib/python2.7/site-packages/werkzeug/serving.py&quot;</span>, line <span style="color: #666666">193</span>, <span style="color: #AA22FF; font-weight: bold">in</span> run_wsgi
+  execute(<span style="color: #008000">self</span><span style="color: #666666">.</span>server<span style="color: #666666">.</span>app)
+File: <span style="color: #BA2121">&quot;/home/ich/anaconda2/lib/python2.7/site-packages/werkzeug/serving.py&quot;</span>, line <span style="color: #666666">183</span>, <span style="color: #AA22FF; font-weight: bold">in</span> execute
+  <span style="color: #008000; font-weight: bold">for</span> data <span style="color: #AA22FF; font-weight: bold">in</span> application_iter:
+File: <span style="color: #BA2121">&quot;/home/ich/anaconda2/lib/python2.7/site-packages/werkzeug/debug/__init__.py&quot;</span>, line <span style="color: #666666">285</span>, <span style="color: #AA22FF; font-weight: bold">in</span> debug_application
+  <span style="color: #008000; font-weight: bold">for</span> item <span style="color: #AA22FF; font-weight: bold">in</span> app_iter:
+File: <span style="color: #BA2121">&quot;/home/ich/anaconda2/lib/python2.7/site-packages/werkzeug/wsgi.py&quot;</span>, line <span style="color: #666666">703</span>, <span style="color: #AA22FF; font-weight: bold">in</span> __next__
+  <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>_next()
+File: <span style="color: #BA2121">&quot;/home/ich/anaconda2/lib/python2.7/site-packages/werkzeug/wrappers.py&quot;</span>, line <span style="color: #666666">81</span>, <span style="color: #AA22FF; font-weight: bold">in</span> _iter_encoded
+  <span style="color: #008000; font-weight: bold">for</span> item <span style="color: #AA22FF; font-weight: bold">in</span> iterable:
+File: <span style="color: #BA2121">&quot;/home/ich/PycharmProjects/RaspberrySky/web.py&quot;</span>, line <span style="color: #666666">26</span>, <span style="color: #AA22FF; font-weight: bold">in</span> gen
+  time<span style="color: #666666">.</span>sleep(<span style="color: #666666">0.25</span>)
+
+<span style="color: #408080; font-style: italic"># ThreadID: 140496013874944</span>
+File: <span style="color: #BA2121">&quot;/home/ich/anaconda2/lib/python2.7/threading.py&quot;</span>, line <span style="color: #666666">774</span>, <span style="color: #AA22FF; font-weight: bold">in</span> __bootstrap
+  <span style="color: #008000">self</span><span style="color: #666666">.</span>__bootstrap_inner()
+File: <span style="color: #BA2121">&quot;/home/ich/anaconda2/lib/python2.7/threading.py&quot;</span>, line <span style="color: #666666">801</span>, <span style="color: #AA22FF; font-weight: bold">in</span> __bootstrap_inner
+  <span style="color: #008000">self</span><span style="color: #666666">.</span>run()
+File: <span style="color: #BA2121">&quot;/home/ich/anaconda2/lib/python2.7/threading.py&quot;</span>, line <span style="color: #666666">754</span>, <span style="color: #AA22FF; font-weight: bold">in</span> run
+  <span style="color: #008000">self</span><span style="color: #666666">.</span>__target(<span style="color: #666666">*</span><span style="color: #008000">self</span><span style="color: #666666">.</span>__args, <span style="color: #666666">**</span><span style="color: #008000">self</span><span style="color: #666666">.</span>__kwargs)
+File: <span style="color: #BA2121">&quot;/home/ich/PycharmProjects/RaspberrySky/camera.py&quot;</span>, line <span style="color: #666666">41</span>, <span style="color: #AA22FF; font-weight: bold">in</span> _capture
+  time<span style="color: #666666">.</span>sleep(<span style="color: #666666">0.2</span>)
+
+<span style="color: #408080; font-style: italic"># ThreadID: 140496675333888</span>
+File: <span style="color: #BA2121">&quot;/home/ich/PycharmProjects/RaspberrySky/web.py&quot;</span>, line <span style="color: #666666">67</span>, <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #666666">&lt;</span>module<span style="color: #666666">&gt;</span>
+  app<span style="color: #666666">.</span>run(host<span style="color: #666666">=</span><span style="color: #BA2121">&#39;0.0.0.0&#39;</span>, debug<span style="color: #666666">=</span><span style="color: #008000">True</span>, threaded<span style="color: #666666">=</span><span style="color: #008000">True</span>, use_reloader<span style="color: #666666">=</span><span style="color: #008000">False</span>)
+File: <span style="color: #BA2121">&quot;/home/ich/anaconda2/lib/python2.7/site-packages/flask/app.py&quot;</span>, line <span style="color: #666666">843</span>, <span style="color: #AA22FF; font-weight: bold">in</span> run
+  run_simple(host, port, <span style="color: #008000">self</span>, <span style="color: #666666">**</span>options)
+File: <span style="color: #BA2121">&quot;/home/ich/anaconda2/lib/python2.7/site-packages/werkzeug/serving.py&quot;</span>, line <span style="color: #666666">694</span>, <span style="color: #AA22FF; font-weight: bold">in</span> run_simple
+  inner()
+File: <span style="color: #BA2121">&quot;/home/ich/anaconda2/lib/python2.7/site-packages/werkzeug/serving.py&quot;</span>, line <span style="color: #666666">659</span>, <span style="color: #AA22FF; font-weight: bold">in</span> inner
+  srv<span style="color: #666666">.</span>serve_forever()
+File: <span style="color: #BA2121">&quot;/home/ich/anaconda2/lib/python2.7/site-packages/werkzeug/serving.py&quot;</span>, line <span style="color: #666666">499</span>, <span style="color: #AA22FF; font-weight: bold">in</span> serve_forever
+  HTTPServer<span style="color: #666666">.</span>serve_forever(<span style="color: #008000">self</span>)
+File: <span style="color: #BA2121">&quot;/home/ich/anaconda2/lib/python2.7/SocketServer.py&quot;</span>, line <span style="color: #666666">231</span>, <span style="color: #AA22FF; font-weight: bold">in</span> serve_forever
+  poll_interval)
+File: <span style="color: #BA2121">&quot;/home/ich/anaconda2/lib/python2.7/SocketServer.py&quot;</span>, line <span style="color: #666666">150</span>, <span style="color: #AA22FF; font-weight: bold">in</span> _eintr_retry
+  <span style="color: #008000; font-weight: bold">return</span> func(<span style="color: #666666">*</span>args)
+
+<span style="color: #408080; font-style: italic"># ThreadID: 140496115894016</span>
+File: <span style="color: #BA2121">&quot;/home/ich/anaconda2/lib/python2.7/threading.py&quot;</span>, line <span style="color: #666666">774</span>, <span style="color: #AA22FF; font-weight: bold">in</span> __bootstrap
+  <span style="color: #008000">self</span><span style="color: #666666">.</span>__bootstrap_inner()
+File: <span style="color: #BA2121">&quot;/home/ich/anaconda2/lib/python2.7/threading.py&quot;</span>, line <span style="color: #666666">801</span>, <span style="color: #AA22FF; font-weight: bold">in</span> __bootstrap_inner
+  <span style="color: #008000">self</span><span style="color: #666666">.</span>run()
+File: <span style="color: #BA2121">&quot;/home/ich/PycharmProjects/RaspberrySky/stacktracer.py&quot;</span>, line <span style="color: #666666">64</span>, <span style="color: #AA22FF; font-weight: bold">in</span> run
+  <span style="color: #008000">self</span><span style="color: #666666">.</span>stacktraces()
+File: <span style="color: #BA2121">&quot;/home/ich/PycharmProjects/RaspberrySky/stacktracer.py&quot;</span>, line <span style="color: #666666">78</span>, <span style="color: #AA22FF; font-weight: bold">in</span> stacktraces
+  fout<span style="color: #666666">.</span>write(stacktraces())
+File: <span style="color: #BA2121">&quot;/home/ich/PycharmProjects/RaspberrySky/stacktracer.py&quot;</span>, line <span style="color: #666666">26</span>, <span style="color: #AA22FF; font-weight: bold">in</span> stacktraces
+  <span style="color: #008000; font-weight: bold">for</span> filename, lineno, name, line <span style="color: #AA22FF; font-weight: bold">in</span> traceback<span style="color: #666666">.</span>extract_stack(stack):
+</pre></div>
