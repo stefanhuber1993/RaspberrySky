@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 from flask import Flask, render_template, Response, redirect, url_for, g
 # Emulated camera
-from camera import Camera
+from camera import Camera, StreamAnalyser
 import time
 import json
 
 app = Flask(__name__)
 camera = Camera(-1)
+analyser = StreamAnalyser(camera)
 
 
 def get_stream(frame_production_method, fps):
@@ -40,17 +41,17 @@ def set_camera(channel):
 
 @app.route('/video_feed')
 def video_feed():
-    return get_stream(camera.get_frame, fps=10)
+    return get_stream(analyser.get_frame, fps=10)
 
 
 @app.route('/max_feed')
 def max_feed():
-    return get_stream(camera.get_frame_cut, fps=2)
+    return get_stream(analyser.get_frame_cut, fps=2)
 
 
 @app.route('/test_feed')
 def test_feed():
-    return get_stream(camera.get_nonsense, fps=1)
+    return get_stream(analyser.get_nonsense, fps=1)
 
 
 if __name__ == '__main__':

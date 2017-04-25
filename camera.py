@@ -52,22 +52,31 @@ class Camera():
                     'frame_raw': img})
         self.cap.release()
 
+    def __del__(self):
+        if hasattr(self, 'c'):
+            self.stop_capture()
+            print("Camera Stream Released")
+        return
+
+
+class StreamAnalyser():
+    def __init__(self, camera):
+        self.camera = camera
 
     def get_frame(self):
         try:
-            img = self.input_deque[-1]['frame_raw']
+            img = self.camera.input_deque[-1]['frame_raw']
             img_jpg = self.encode_jpg(img, 95)
             return img_jpg
         except Exception as e:
             print(e)
             return ""
 
-
     def get_frame_cut(self):
         try:
-            img = self.input_deque[-1]['frame_raw']
+            img = self.camera.input_deque[-1]['frame_raw']
             img_bw = img.mean(2)
-            thr = img_bw > img_bw.mean()*2.0
+            thr = img_bw > img_bw.mean() * 2.0
             labeled_array, num_features = measurements.label(thr)
             size = np.bincount(labeled_array.ravel())
             biggest_label = size[1:].argmax() + 1
@@ -77,10 +86,10 @@ class Camera():
             (ystart, xstart), (ystop, xstop) = B.min(0), B.max(0) + 1
             Atrim = img[ystart:ystop, xstart:xstop]
 
-            if Atrim.size<16**2:
+            if Atrim.size < 16 ** 2:
                 return ""
 
-            Atrim_aspect_corr = pad_to_ratio(Atrim, 4.0/3.0)
+            Atrim_aspect_corr = pad_to_ratio(Atrim, 4.0 / 3.0)
             img_jpg = self.encode_jpg(Atrim_aspect_corr, 95)
 
             return img_jpg
@@ -88,28 +97,11 @@ class Camera():
             print(e)
             return ""
 
-
     def get_nonsense(self):
         nonsense = (np.random.rand(120, 160, 3) * 255).astype(np.uint8)
         img_jpg = self.encode_jpg(nonsense, 50)
         return img_jpg
 
-    def encode_jpg(self, img, qual):
+    @staticmethod
+    def encode_jpg(img, qual):
         return cv2.imencode('.jpg', img, [cv2.IMWRITE_JPEG_QUALITY, qual])[1].tostring()
-
-    def __del__(self):
-        if hasattr(self, 'c'):
-            self.stop_capture()
-            print("Camera Stream Released")
-        return
-
-#
-# if __name__ == "__main__":
-#     print("Making 10 Seconds of test capture")
-#     cam = Camera()
-#     cam.start_capture(verbose=False)
-#     for i in range(5):
-#         time.sleep(2)
-#         print(len(cam.input_deque))
-#         print("Last Frame is jpg str with length %s"%len(cam.get_frame()))
-#     cam.stop_capture()
