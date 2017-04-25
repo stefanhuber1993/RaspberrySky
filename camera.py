@@ -5,6 +5,7 @@ import numpy as np
 from collections import deque
 from threading import Thread
 from scipy.ndimage import measurements
+from utilities import pad_to_ratio
 
 class Camera():
     def __init__(self, channel=0):
@@ -80,17 +81,15 @@ class Camera():
             (ystart, xstart), (ystop, xstop) = B.min(0), B.max(0) + 1
             Atrim = img[ystart:ystop, xstart:xstop]
 
-            if Atrim.size<64:
-                print("Too small")
-                raise AssertionError
+            if Atrim.size<16**2:
+                return ""
 
-            img_jpg = self.encode_jpg(Atrim, 95)
-
-            #img_jpg = self.encode_jpg((255*thr.astype(np.float)).astype(np.uint8), 80)
+            Atrim_aspect_corr = pad_to_ratio(Atrim, 4.0/3.0)
+            img_jpg = self.encode_jpg(Atrim_aspect_corr, 95)
 
             return img_jpg
-        except:
-            # print('No image found')
+        except Exception as e:
+            print(e)
             return ""
 
 

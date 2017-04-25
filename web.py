@@ -27,7 +27,6 @@ def get_stream(frame_production_method, fps):
 
 @app.route('/')
 def index():
-    """Video streaming home page."""
     return redirect(url_for('static', filename='index.html'))
 
 
@@ -41,12 +40,12 @@ def set_camera(channel):
 
 @app.route('/video_feed')
 def video_feed():
-    return get_stream(camera.get_frame, fps=20)
+    return get_stream(camera.get_frame, fps=10)
 
 
 @app.route('/max_feed')
 def max_feed():
-    return get_stream(camera.get_frame_cut, fps=20)
+    return get_stream(camera.get_frame_cut, fps=2)
 
 
 @app.route('/test_feed')
