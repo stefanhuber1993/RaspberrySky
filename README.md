@@ -3,7 +3,7 @@ A webserver for Raspberry Pi for using a webcam with a teleskope.
 
 
 ## Usage
-Start web.py on Raspberry Pi. Will open server on 0.0.0.0:5000.
+Start web.py on Raspberry Pi or at Laptop attached to webcam attached to telescope. Will open server on 0.0.0.0:5000.
 Access this address with browser on Raspberry Sky (or over local network).
 
 ## Dependencies
