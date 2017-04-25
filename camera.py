@@ -9,11 +9,8 @@ from utilities import pad_to_ratio
 
 class Camera():
     def __init__(self, channel=0):
-        # Prepare the camera
         self.channel = channel
-        #self.cap = cv2.VideoCapture(channel)
         self.input_deque = deque(maxlen=30 * 60 * 5)
-        self.frame = None
         self.break_capture = False
 
 
@@ -30,30 +27,29 @@ class Camera():
         time.sleep(0.5)
         if self.cap.isOpened():
             print("Successful Connection to Camera on /dev/video%s" % self.channel)
-            c = Thread(target=self._capture, args=(self.input_deque, verbose))
-            c.start()
+            self.c = Thread(target=self._capture, args=(self.input_deque, verbose))
+            self.c.start()
+            return True
         else:
             print("Failed Connection to Camera on /dev/video%s" % self.channel)
+            return False
 
 
     def stop_capture(self):
         self.break_capture = True
-        time.sleep(1)
+        self.c.join()
+        del self.c
 
     def _capture(self, deque, verbose):
         self.break_capture = False
         while not self.break_capture:
-            #time.sleep(0.005)
             s, img = self.cap.read()
             if s:
                 if verbose:
                     print("Frame %s captured with shape %sx%s"%(len(deque), img.shape[1],img.shape[0]),)
-                #self.frame = img
-                #print(id(self.input_deque))
                 deque.append({
                     'time': time.time(),
                     'frame_raw': img})
-                #print(self.input_deque[-1])
         self.cap.release()
 
 
@@ -62,8 +58,8 @@ class Camera():
             img = self.input_deque[-1]['frame_raw']
             img_jpg = self.encode_jpg(img, 95)
             return img_jpg
-        except:
-            #print('No image found')
+        except Exception as e:
+            print(e)
             return ""
 
 
@@ -102,18 +98,18 @@ class Camera():
         return cv2.imencode('.jpg', img, [cv2.IMWRITE_JPEG_QUALITY, qual])[1].tostring()
 
     def __del__(self):
-        self.break_capture = True
-        time.sleep(1)
-        print("Camera Stream Released")
-        return ()
+        if hasattr(self, 'c'):
+            self.stop_capture()
+            print("Camera Stream Released")
+        return
 
-
-if __name__ == "__main__":
-    print("Making 10 Seconds of test capture")
-    cam = Camera()
-    cam.start_capture(verbose=False)
-    for i in range(5):
-        time.sleep(2)
-        print(len(cam.input_deque))
-        print("Last Frame is jpg str with length %s"%len(cam.get_frame()))
-    cam.stop_capture()
+#
+# if __name__ == "__main__":
+#     print("Making 10 Seconds of test capture")
+#     cam = Camera()
+#     cam.start_capture(verbose=False)
+#     for i in range(5):
+#         time.sleep(2)
+#         print(len(cam.input_deque))
+#         print("Last Frame is jpg str with length %s"%len(cam.get_frame()))
+#     cam.stop_capture()

@@ -33,11 +33,18 @@ angular
       })
       .then(
         function successCallback(response) {
-        ctrl.streamOff = false;
-        console.log("Successfully changed camera channel!");
+        console.log(response.data.success)
+        if (response.data.success == true){
+            ctrl.streamOff = false;
+            console.log("Successfully changed camera channel!");
+        }
+        else{
+        console.log("No signal on this camera channel!");
+        }
+
       }
-      , function successCallback(response) {
-        console.log("Failed to change camera channel!");
+      , function errorCallback(response) {
+        console.log("Failed to communicate with server.");
       });
     };
 

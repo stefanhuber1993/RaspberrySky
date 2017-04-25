@@ -3,6 +3,7 @@ from flask import Flask, render_template, Response, redirect, url_for, g
 # Emulated camera
 from camera import Camera
 import time
+import json
 
 app = Flask(__name__)
 camera = Camera(-1)
@@ -33,9 +34,8 @@ def index():
 @app.route('/set_camera/<channel>', methods=['GET'])
 def set_camera(channel):
     camera.set_channel(channel)
-    camera.start_capture(verbose=False)
-    time.sleep(0.5)
-    return 'OK'
+    success = camera.start_capture(verbose=False)
+    return json.dumps({'success':success})
 
 
 @app.route('/video_feed')
