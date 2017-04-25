@@ -3,7 +3,6 @@ from flask import Flask, render_template, Response, redirect, url_for, g
 # Emulated camera
 from camera import Camera
 import time
-import stacktracer
 
 
 app = Flask(__name__)
@@ -16,21 +15,33 @@ def index():
     #return render_template('index.html')
 
 def encode_as_content(jpg_str):
-    return b'--frame\r\nContent-Type: image/jpeg\r\n\r\n' + str(jpg_str) + b'\r\n'
+    if jpg_str == "":
+        return ""
+    else:
+        return b'--frame\r\nContent-Type: image/jpeg\r\n\r\n' + str(jpg_str) + b'\r\n'
 
 
 def gen(camera):
     """Video streaming generator function."""
-    while True:
+    #time.sleep(3)
+    while True:#not camera.break_capture:
         frame = camera.get_frame()
+        time.sleep(0.1)
+        yield encode_as_content(frame)
+
+def gen_max(camera):
+    """Video streaming generator function."""
+    #time.sleep(3)
+    while True:#not camera.break_capture:
+        frame = camera.get_frame_cut()
         time.sleep(0.1)
         yield encode_as_content(frame)
 
 def gen_nonsense(camera):
     """Video streaming generator function."""
-    while True:
+    while True:#not camera.break_capture:
         frame = camera.get_nonsense()
-        time.sleep(0.5)
+        time.sleep(0.1)
         yield encode_as_content(frame)
 
 
@@ -41,6 +52,7 @@ def set_camera(channel):
     print("Test")
     camera.set_channel(channel)
     camera.start_capture(verbose=False)
+    time.sleep(0.5)
     return 'OK' 
 
 
@@ -48,9 +60,16 @@ def set_camera(channel):
 def video_feed():
     global camera
     """Video streaming route. Put this in the src attribute of an img tag."""
+    return Response(gen(camera),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/max_feed')
+def max_feed():
+    global camera
+    """Video streaming route. Put this in the src attribute of an img tag."""
     #return Response(gen(Camera()),
     #                mimetype='multipart/x-mixed-replace; boundary=frame')
-    return Response(gen(camera),
+    return Response(gen_max(camera),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/test_feed')

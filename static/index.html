@@ -104,36 +104,42 @@
           </md-button>
 
           <div class="md-padding" layout="row" layout-wrap>
+              <mjpeg url="videoUrl"></mjpeg>
               <div flex="100">
                   <md-card>
-                    <img ng-if="!ctrl.streamOff" ng-src="/video_feed">
+                    <img ng-src="{{!ctrl.streamOff && '/video_feed' || '//:0'}}">
                   </md-card>
               </div>
-              <div flex="33">
+              <div flex="100">
                   <md-card>
-                    <img ng-if="!ctrl.streamOff" ng-src="/test_feed">
+                    <img ng-src="{{!ctrl.streamOff && '/max_feed' || '//:0'}}">
                   </md-card>
               </div>
-              <div flex="33">
+              <div flex="100">
                   <md-card>
-                    <img ng-if="!ctrl.streamOff" ng-src="/test_feed">
+                    <img ng-src="{{!ctrl.streamOff && '/test_feed' || '//:0'}}">
                   </md-card>
               </div>
-              <div flex="33">
-                  <md-card>
-                    <img ng-if="!ctrl.streamOff" ng-src="/test_feed">
-                  </md-card>
-              </div>
-              <div flex="50">
-                  <md-card>
-                    <img ng-if="!ctrl.streamOff" ng-src="/test_feed">
-                  </md-card>
-              </div>
-              <div flex="50">
-                  <md-card>
-                    <img ng-if="!ctrl.streamOff" ng-src="/test_feed">
-                  </md-card>
-              </div>
+              <!--<div flex="33">-->
+                  <!--<md-card>-->
+                    <!--<img ng-if="!ctrl.streamOff" ng-src="/test_feed">-->
+                  <!--</md-card>-->
+              <!--</div>-->
+              <!--<div flex="33">-->
+                  <!--<md-card>-->
+                    <!--<img ng-if="!ctrl.streamOff" ng-src="/test_feed">-->
+                  <!--</md-card>-->
+              <!--</div>-->
+              <!--<div flex="50">-->
+                  <!--<md-card>-->
+                    <!--<img ng-if="!ctrl.streamOff" ng-src="/test_feed">-->
+                  <!--</md-card>-->
+              <!--</div>-->
+              <!--<div flex="50">-->
+                  <!--<md-card>-->
+                    <!--<img ng-if="!ctrl.streamOff" ng-src="/test_feed">-->
+                  <!--</md-card>-->
+              <!--</div>-->
           </div>
 
         </div>
