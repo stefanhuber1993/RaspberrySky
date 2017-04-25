@@ -25,7 +25,6 @@ angular
     $scope.setCamera = function(){
       ctrl.streamOff = true;
       choice = $scope.cameraChoice
-      console.log("Test");
       $http(
         {
         method: "GET",
@@ -41,12 +40,22 @@ angular
         else{
         console.log("No signal on this camera channel!");
         }
-
       }
       , function errorCallback(response) {
         console.log("Failed to communicate with server.");
       });
     };
+
+
+    $scope.setImagingParameters = function(){
+      exposure = 1.0 / $scope.exposure * 15000
+      $http(
+        {
+        method: "GET",
+        url: "/set_imaging_parameters/".concat(exposure)
+      })
+    };
+
 
   })
 

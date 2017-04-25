@@ -6,12 +6,16 @@ from collections import deque
 from threading import Thread
 from scipy.ndimage import measurements
 from utilities import pad_to_ratio
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from subprocess import call
 
 class Camera():
     def __init__(self, channel=0):
         self.channel = channel
         self.input_deque = deque(maxlen=30 * 60 * 5)
         self.break_capture = False
+        self.c = None
 
 
     def set_channel(self, newchannel):
@@ -38,7 +42,12 @@ class Camera():
     def stop_capture(self):
         self.break_capture = True
         self.c.join()
-        del self.c
+        self.c = None
+
+    def set_imaging_parameters(self, exposure):
+        base_command = ['v4l2-ctl', '--device', '/dev/video%s'%self.channel, '--set-ctrl']
+        call(base_command + ['gain_automatic=0'])
+        call(base_command + ['exposure=%s'%exposure])
 
     def _capture(self, deque, verbose):
         self.break_capture = False
@@ -53,7 +62,7 @@ class Camera():
         self.cap.release()
 
     def __del__(self):
-        if hasattr(self, 'c'):
+        if self.c is not None:
             self.stop_capture()
             print("Camera Stream Released")
         return
@@ -96,6 +105,49 @@ class StreamAnalyser():
         except Exception as e:
             print(e)
             return ""
+
+    def get_frame_hist(self):
+        try:
+            img = self.camera.input_deque[-1]['frame_raw'].mean(2).astype(np.uint8)
+            img_flat = img.flatten()
+            bins = np.bincount(img_flat, minlength=256).astype(float)
+            bins /= bins.max()
+            bins ** 0.25
+            height = float(128+64-1)
+            bins *= height
+            bins = bins.astype(np.int)
+            histogram = np.zeros((128+64, 256), dtype=np.uint8)
+            histogram[int(height)-bins, np.arange(256)] = 255
+            img_jpg = self.encode_jpg(histogram, 90)
+            return img_jpg
+        except Exception as e:
+            print(e)
+            return ""
+
+    def get_frame_hist_line(self):
+        try:
+            img = self.camera.input_deque[-1]['frame_raw'].mean(2).astype(np.uint8)
+            img_flat = img.flatten()
+            bins = np.bincount(img_flat, minlength=256).astype(float)
+            bins /= bins.max()
+
+            fig = plt.figure(facecolor='black', edgecolor='white')
+            canvas = FigureCanvas(fig)
+            axes = plt.axes((0,0,1,1), axisbg='black')
+            axes.xaxis.set_tick_params(color='white', labelcolor='white')
+            axes.yaxis.set_tick_params(color='white', labelcolor='white')
+            for spine in axes.spines.values():
+                spine.set_color('white')
+            plt.plot(np.arange(256), bins, 'white', axes=axes)
+            canvas.draw()
+            width, height = fig.get_size_inches() * fig.get_dpi()
+            histogram = np.fromstring(canvas.tostring_rgb(), dtype='uint8').reshape(int(height), int(width), 3)
+            img_jpg = self.encode_jpg(histogram, 90)
+            return img_jpg
+        except Exception as e:
+            print(e)
+            return ""
+
 
     def get_nonsense(self):
         nonsense = (np.random.rand(120, 160, 3) * 255).astype(np.uint8)

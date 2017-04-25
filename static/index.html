@@ -65,7 +65,7 @@
             <p>Exposure Time</p>
             <md-slider-container>
               <span>1/s</span>
-              <md-slider flex min="2" max="1000" ng-model="exposure" aria-label=exp id="red-slider">
+              <md-slider flex min="2" max="100" ng-model="exposure" aria-label=exp id="red-slider">
               </md-slider>
               <md-input-container>
                 <input flex type="number" ng-model="exposure" aria-label="red" aria-controls="red-slider">
@@ -74,7 +74,7 @@
 
             <p>Send Settings to Server</p>
             <div layout="row">
-              <md-button ng-click="toggleLeft()" class="md-primary">
+              <md-button ng-click="setImagingParameters()" class="md-primary">
                 Send
               </md-button>
     	        <md-button ng-click="toggleLeft()" class="md-warn">
@@ -113,7 +113,7 @@
               </div>
               <div flex="50">
                   <md-card>
-                    <img ng-src="{{!ctrl.streamOff && '/test_feed' || '//:0'}}">
+                    <img ng-src="{{!ctrl.streamOff && '/hist_feed' || '//:0'}}">
                   </md-card>
               </div>
               <div flex="100">

@@ -39,6 +39,11 @@ def set_camera(channel):
     return json.dumps({'success':success})
 
 
+@app.route('/set_imaging_parameters/<exposure>', methods=['GET'])
+def set_imaging_parameters(exposure):
+    camera.set_imaging_parameters(exposure)
+    return ()
+
 @app.route('/video_feed')
 def video_feed():
     return get_stream(analyser.get_frame, fps=10)
@@ -52,6 +57,10 @@ def max_feed():
 @app.route('/test_feed')
 def test_feed():
     return get_stream(analyser.get_nonsense, fps=1)
+
+@app.route('/hist_feed')
+def hist_feed():
+    return get_stream(analyser.get_frame_hist, fps=10)
 
 
 if __name__ == '__main__':
