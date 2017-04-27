@@ -11,14 +11,15 @@ python 2.7, opencv
 
 ## Features
 * Choice of Webcam, e.g. /dev/video0
+* Choice of Exposure Time
 * Live view of webcam image
 * Live magnification view of imaged planet.
+* Live computation of image histogram
 
 ## TODO
 * Server serve at IP open to local network
 * Clean up browser interface
 
 ## Future Features
-* Choice of Exposure Time
-* Live computation of image histogram and fourier spectrum
+* Live computation of fourier spectrum
 * Live computation of "best of" image from the stream, e.g. best image of planet in last 10 seconds.
