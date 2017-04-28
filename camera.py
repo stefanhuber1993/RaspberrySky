@@ -5,10 +5,9 @@ import numpy as np
 from collections import deque
 from threading import Thread
 from scipy.ndimage import measurements
-from utilities import pad_to_ratio
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from utilities import pad_to_ratio, azimuthalAverage
 from subprocess import call
+from scipy import fftpack
 
 class Camera():
     def __init__(self, channel=0):
@@ -118,36 +117,32 @@ class StreamAnalyser():
             bins = bins.astype(np.int)
             histogram = np.zeros((128+64, 256), dtype=np.uint8)
             histogram[int(height)-bins, np.arange(256)] = 255
-            img_jpg = self.encode_jpg(histogram, 90)
+            img_jpg = self.encode_jpg(histogram, 60)
             return img_jpg
         except Exception as e:
             print(e)
             return ""
 
-    def get_frame_hist_line(self):
+    def get_frame_power(self):
         try:
             img = self.camera.input_deque[-1]['frame_raw'].mean(2).astype(np.uint8)
-            img_flat = img.flatten()
-            bins = np.bincount(img_flat, minlength=256).astype(float)
-            bins /= bins.max()
-
-            fig = plt.figure(facecolor='black', edgecolor='white')
-            canvas = FigureCanvas(fig)
-            axes = plt.axes((0,0,1,1), axisbg='black')
-            axes.xaxis.set_tick_params(color='white', labelcolor='white')
-            axes.yaxis.set_tick_params(color='white', labelcolor='white')
-            for spine in axes.spines.values():
-                spine.set_color('white')
-            plt.plot(np.arange(256), bins, 'white', axes=axes)
-            canvas.draw()
-            width, height = fig.get_size_inches() * fig.get_dpi()
-            histogram = np.fromstring(canvas.tostring_rgb(), dtype='uint8').reshape(int(height), int(width), 3)
+            F1 = fftpack.fft2(img)
+            F2 = fftpack.fftshift(F1)
+            psd2D = np.log(np.abs(F2) ** 2)
+            psd1D = azimuthalAverage(psd2D).astype(float)
+            psd1D /= np.percentile(psd1D, 100)
+            psd1D = np.clip(psd1D, 0,1)
+            #psd1D ** 0.01
+            height = int(len(psd1D)*0.75-1)
+            psd1D *= float(height)
+            psd1D = psd1D.astype(np.int)
+            histogram = np.zeros((height+1, len(psd1D)), dtype=np.uint8)
+            histogram[height-psd1D, np.arange(len(psd1D))] = 255
             img_jpg = self.encode_jpg(histogram, 90)
             return img_jpg
         except Exception as e:
             print(e)
             return ""
-
 
     def get_nonsense(self):
         nonsense = (np.random.rand(120, 160, 3) * 255).astype(np.uint8)

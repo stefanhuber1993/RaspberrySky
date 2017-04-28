@@ -106,14 +106,19 @@
           <div class="md-padding" layout="row" layout-wrap>
 
               <mjpeg url="videoUrl"></mjpeg>
-              <div flex="50">
+              <div flex="33">
                   <md-card>
                     <img ng-src="{{!ctrl.streamOff && '/max_feed' || '//:0'}}">
                   </md-card>
               </div>
-              <div flex="50">
+              <div flex="33">
                   <md-card>
                     <img ng-src="{{!ctrl.streamOff && '/hist_feed' || '//:0'}}">
+                  </md-card>
+              </div>
+              <div flex="33">
+                  <md-card>
+                    <img ng-src="{{!ctrl.streamOff && '/power_feed' || '//:0'}}">
                   </md-card>
               </div>
               <div flex="100">

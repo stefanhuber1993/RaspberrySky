@@ -62,6 +62,10 @@ def test_feed():
 def hist_feed():
     return get_stream(analyser.get_frame_hist, fps=10)
 
+@app.route('/power_feed')
+def power_feed():
+    return get_stream(analyser.get_frame_power, fps=10)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, threaded=True, use_reloader=False)
