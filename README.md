@@ -21,9 +21,9 @@ python 2.7, opencv
 * Server serve at IP open to local network
 * Clean up browser interface
 * Tabs in Browser Interface, 
-..* e.g. Focussing [[Histogram, Fourier Spectrum], Image+Focus-peaking]
-..* Planet View [[Image, BestOf], MagView]
-..* Detailed [All]
+    * e.g. Focussing [[Histogram, Fourier Spectrum], Image+Focus-peaking]
+    * Planet View [[Image, BestOf], MagView]
+    * Detailed [All]
 * View for big laptop screens
 
 ## Future Features
