@@ -53,6 +53,10 @@ def video_feed():
 def max_feed():
     return get_stream(analyser.get_frame_cut, fps=2)
 
+@app.route('/focus_feed')
+def focus_feed():
+    return get_stream(analyser.get_frame_focuspeak, fps=2)
+
 
 @app.route('/test_feed')
 def test_feed():
