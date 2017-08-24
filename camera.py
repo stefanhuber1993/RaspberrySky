@@ -1,10 +1,8 @@
 #!/usr/bin/python2
 import cv2
 import time
-
 from collections import deque
 from threading import Thread
-
 from subprocess import call
 
 

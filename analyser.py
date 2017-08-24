@@ -2,6 +2,7 @@ from scipy import fftpack
 import numpy as np
 from scipy.ndimage import measurements
 from utilities import pad_to_ratio, azimuthalAverage
+import cv2
 
 
 class StreamAnalyser():
@@ -20,7 +21,30 @@ class StreamAnalyser():
     def get_frame_focuspeak(self):
         try:
             img = self.camera.input_deque[-1]['frame_raw']
-            img_jpg = self.encode_jpg(img, 95)
+            img_bw = img.mean(2)
+            binning_factor = 2
+
+            img_view = img_bw.reshape(img.shape[0]//binning_factor, binning_factor,
+                                      img.shape[1]//binning_factor, binning_factor)
+            img_binned = img_view[:,0,:,0]
+
+            sobel_x = cv2.Sobel(img_binned, cv2.CV_64F, 1, 0, ksize=1)#.mean(2)
+            sobel_y = cv2.Sobel(img_binned, cv2.CV_64F, 0, 1, ksize=1)#.mean(2)
+            both = np.sqrt(sobel_x**2 + sobel_y**2)
+
+
+            bloat = np.repeat(np.repeat(both,binning_factor, axis=0),binning_factor, axis=1)
+
+            colored_img = np.copy(img)
+            colored_img[bloat > 50] =  [0, 255, 191]
+            colored_img[bloat > 100] = [0, 191, 255]
+            colored_img[bloat > 150] = [0, 64, 255]
+            colored_img[bloat > 200] = [0, 0, 255]
+
+
+
+
+            img_jpg = self.encode_jpg(colored_img, 50)
             return img_jpg
         except Exception as e:
             print(e)

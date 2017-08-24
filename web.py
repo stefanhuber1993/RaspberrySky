@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 from flask import Flask, render_template, Response, redirect, url_for, g
 # Emulated camera
-from camera import Camera, StreamAnalyser
+from camera import Camera
+from analyser import StreamAnalyser
 import time
 import json
 
@@ -46,16 +47,16 @@ def set_imaging_parameters(exposure):
 
 @app.route('/video_feed')
 def video_feed():
-    return get_stream(analyser.get_frame, fps=10)
+    return get_stream(analyser.get_frame, fps=20)
 
 
 @app.route('/max_feed')
 def max_feed():
-    return get_stream(analyser.get_frame_cut, fps=2)
+    return get_stream(analyser.get_frame_cut, fps=5)
 
 @app.route('/focus_feed')
 def focus_feed():
-    return get_stream(analyser.get_frame_focuspeak, fps=2)
+    return get_stream(analyser.get_frame_focuspeak, fps=20)
 
 
 @app.route('/test_feed')
@@ -68,7 +69,7 @@ def hist_feed():
 
 @app.route('/power_feed')
 def power_feed():
-    return get_stream(analyser.get_frame_power, fps=10)
+    return get_stream(analyser.get_frame_power, fps=3)
 
 
 if __name__ == '__main__':
