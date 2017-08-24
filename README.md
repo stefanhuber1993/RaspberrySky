@@ -16,6 +16,7 @@ python 2.7, opencv
 * Live magnification view of imaged planet.
 * Live computation of image histogram
 * Live computation of fourier spectrum
+* Focus Peaking to help to adjust focus
 
 ## TODO
 * Server serve at IP open to local network
@@ -28,4 +29,4 @@ python 2.7, opencv
 
 ## Future Features
 * Live computation of "best of" image from the stream, e.g. best image of planet in last 10 seconds.
-* Focus Peaking to help adjust focus
+* Record images from stream
