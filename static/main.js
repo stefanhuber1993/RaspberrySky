@@ -10,6 +10,14 @@ angular
 
     ctrl.streamOff = true;
 
+    ctrl.tiles = [
+                 {link:"/video_feed", title:"Webcam Video"},
+                 {link:"/max_feed", title:"Brightest Area"},
+                 {link:"/power_feed", title:"Power Spectrum"},
+                 {link:"/hist_feed", title:"Histogram"},
+                 {link:"/focus_feed", title:"Focus Peaking"},
+                 {link:"/test_feed", title:"Test Feed"}];
+
 
     $window.onbeforeunload = function (evt) {
                 ctrl.streamOff = true;

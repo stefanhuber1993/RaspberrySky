@@ -44,7 +44,7 @@ class StreamAnalyser():
 
 
 
-            img_jpg = self.encode_jpg(colored_img, 50)
+            img_jpg = self.encode_jpg(colored_img, 95)
             return img_jpg
         except Exception as e:
             print(e)
