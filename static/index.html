@@ -99,12 +99,18 @@
         <!--<div flex>-->
 
         <div layout="column" layout-fill>
+            <md-toolbar class="md-accent">
+                <div class="md-toolbar-tools" layout-align="space-between center">
 
-            <div>
-          <md-button ng-click="toggleLeft()" class="md-primary">
-            Options
-          </md-button>
-            </div>
+
+                    <div>
+                        <md-button ng-click="toggleLeft()" class="md-primary">
+                            Options
+                        </md-button>
+                    </div>
+                    <h2 class="md-flex">Raspberry Sky v0.1</h2>
+                </div>
+            </md-toolbar>
 
 
           <!--<div class="md-padding" layout="row" layout-wrap>-->
@@ -139,17 +145,23 @@
 
 
               <md-grid-list
-                      md-cols-xs="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="4"
+                      md-cols-xs="1" md-cols-sm="{{ctrl.boolFull && 1 || 2}}" md-cols-md="{{ctrl.boolFull && 1 || 3}}" md-cols-gt-md="{{ctrl.boolFull && 1 || 4}}"
                       md-row-height-gt-md="4:3" md-row-height="4:3"
                       md-gutter="4px" md-gutter-gt-sm="8px">
 
-                  <md-grid-tile ng-repeat="tile in ctrl.tiles"
+                  <md-grid-tile ng-repeat="tile in ctrl.tiles_shown"
                                 md-rowspan="1"
                                 md-colspan="1"
                                 md-colspan-sm="1"
                                 md-colspan-xs="1">
                       <img ng-src="{{!ctrl.streamOff && tile.link || '//:0'}}" width="auto" height="100%">
-                      <md-grid-tile-footer><h3>{{tile.title}}</h3></md-grid-tile-footer>
+                      <md-grid-tile-footer>
+                          <div layout="row" layout-align="start center">
+                            <h3>{{tile.title}}</h3>
+                            <md-button ng-click="tileFull($index)">Enlarge</md-button>
+                          </div>
+                      </md-grid-tile-footer>
+
                   </md-grid-tile>
 
               </md-grid-list>

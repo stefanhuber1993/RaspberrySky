@@ -8,6 +8,18 @@ angular
     $scope.toggleLeft = buildToggler('left');
     $scope.toggleRight = buildToggler('right');
 
+    $scope.tileFull = function(num){
+        if (!ctrl.boolFull) {
+            ctrl.tiles_shown = [ctrl.tiles[num]];
+            ctrl.boolFull=true
+        }
+        else {
+            ctrl.tiles_shown = ctrl.tiles;
+            ctrl.boolFull=false
+        }
+
+    };
+
     ctrl.streamOff = true;
 
     ctrl.tiles = [
@@ -17,6 +29,8 @@ angular
                  {link:"/hist_feed", title:"Histogram"},
                  {link:"/focus_feed", title:"Focus Peaking"},
                  {link:"/test_feed", title:"Test Feed"}];
+    ctrl.tiles_shown = ctrl.tiles
+    ctrl.boolFull = false
 
 
     $window.onbeforeunload = function (evt) {

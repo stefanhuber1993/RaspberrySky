@@ -87,7 +87,7 @@ class StreamAnalyser():
             bins = bins.astype(np.int)
             histogram = np.zeros((128+64, 256), dtype=np.uint8)
             histogram[int(height)-bins, np.arange(256)] = 255
-            img_jpg = self.encode_jpg(histogram, 60)
+            img_jpg = self.encode_jpg(histogram, 30)
             return img_jpg
         except Exception as e:
             print(e)
@@ -108,7 +108,7 @@ class StreamAnalyser():
             psd1D = psd1D.astype(np.int)
             histogram = np.zeros((height+1, len(psd1D)), dtype=np.uint8)
             histogram[height-psd1D, np.arange(len(psd1D))] = 255
-            img_jpg = self.encode_jpg(histogram, 90)
+            img_jpg = self.encode_jpg(histogram, 30)
             return img_jpg
         except Exception as e:
             print(e)
