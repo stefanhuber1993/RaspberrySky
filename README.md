@@ -6,6 +6,11 @@ A webserver for Raspberry Pi for using a webcam with a teleskope.
 Start web.py on Raspberry Pi or at Laptop attached to webcam attached to telescope. Will open server on 0.0.0.0:5000.
 Access this address with browser on Raspberry Sky with display(or over local network soon).
 
+## Screenshot
+This shows the browser interface with live views of Focus Peaking, Brightest Stop (Planet)...
+![Screenshot](img/screenshot.png)
+
+
 ## Dependencies
 python 2.7, opencv
 
