@@ -1,4 +1,4 @@
-# RaspberrySky - WIP
+# RaspberrySky - v0.1
 A webserver for Raspberry Pi for using a webcam with a teleskope.
 
 
