@@ -1,7 +1,9 @@
+
+#DECORATOR
+
 from scipy import fftpack
 import numpy as np
-from scipy.ndimage import measurements
-from utilities import pad_to_ratio, azimuthalAverage
+from utilities import pad_to_ratio, azimuthalAverage, extract_largest_components
 import cv2
 
 
@@ -17,6 +19,12 @@ class StreamAnalyser():
         except Exception as e:
             print(e)
             return ""
+
+    def get_average_preview(self):
+        try:
+            pass
+        except:
+            pass
 
     def get_frame_focuspeak(self):
         try:
@@ -35,16 +43,16 @@ class StreamAnalyser():
 
             bloat = np.repeat(np.repeat(both,binning_factor, axis=0),binning_factor, axis=1)
 
+            low, high = img_binned.min(), img_binned.max()
+            contrast = high-low
+
             colored_img = np.copy(img)
-            colored_img[bloat > 50] =  [0, 255, 191]
-            colored_img[bloat > 100] = [0, 191, 255]
-            colored_img[bloat > 150] = [0, 64, 255]
-            colored_img[bloat > 200] = [0, 0, 255]
+            colored_img[bloat > 0.2*contrast] = [0, 255, 191]
+            colored_img[bloat > 0.4*contrast] = [0, 191, 255]
+            colored_img[bloat > 0.6*contrast] = [0, 64, 255]
+            colored_img[bloat > 0.8*contrast] = [0, 0, 255]
 
-
-
-
-            img_jpg = self.encode_jpg(colored_img, 95)
+            img_jpg = self.encode_jpg(colored_img, 80)
             return img_jpg
         except Exception as e:
             print(e)
@@ -53,22 +61,11 @@ class StreamAnalyser():
     def get_frame_cut(self):
         try:
             img = self.camera.input_deque[-1]['frame_raw']
-            img_bw = img.mean(2)
-            thr = img_bw > img_bw.mean() * 2.0
-            labeled_array, num_features = measurements.label(thr)
-            size = np.bincount(labeled_array.ravel())
-            biggest_label = size[1:].argmax() + 1
-            clump_mask = labeled_array == biggest_label
-
-            B = np.argwhere(clump_mask)
-            (ystart, xstart), (ystop, xstop) = B.min(0), B.max(0) + 1
-            Atrim = img[ystart:ystop, xstart:xstop]
-
-            if Atrim.size < 16 ** 2:
+            img_trim = extract_largest_components(img)
+            if img_trim.size < 16 ** 2:
                 return ""
-
-            Atrim_aspect_corr = pad_to_ratio(Atrim, 4.0 / 3.0)
-            img_jpg = self.encode_jpg(Atrim_aspect_corr, 95)
+            img_trim_aspect_corr = pad_to_ratio(img_trim, 4.0 / 3.0)
+            img_jpg = self.encode_jpg(img_trim_aspect_corr, 95)
 
             return img_jpg
         except Exception as e:

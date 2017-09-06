@@ -1,5 +1,18 @@
 import numpy as np
+from scipy.ndimage import measurements
 
+def extract_largest_components(img):
+    img_bw = img.mean(2)
+    low, high = img_bw.min(), img_bw.max()
+    thr = img_bw > (3*high + low)/4.0
+    labeled_array, num_features = measurements.label(thr)
+    size = np.bincount(labeled_array.ravel())
+    biggest_label = size[1:].argmax() + 1
+    clump_mask = labeled_array == biggest_label
+    B = np.argwhere(clump_mask)
+    (ystart, xstart), (ystop, xstop) = B.min(0), B.max(0) + 1
+    Atrim = img[ystart:ystop, xstart:xstop]
+    return Atrim
 
 def pad_to_ratio(array, aspect):
     height, width = array.shape[0:2]
