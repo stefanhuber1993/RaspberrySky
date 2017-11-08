@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from flask import Flask, render_template, Response, redirect, url_for, g
 # Emulated camera
-from camera import Camera
+from camera_pygame import Camera
 from analyser import StreamAnalyser
 import time
 import json
@@ -16,7 +16,7 @@ def get_stream(frame_production_method, fps):
         if jpg_str == "":
             return ""
         else:
-            return b'--frame\r\nContent-Type: image/jpeg\r\n\r\n' + str(jpg_str) + b'\r\n'
+            return b'--frame\r\nContent-Type: image/jpeg\r\n\r\n' + bytes(jpg_str) + b'\r\n'
 
     def frame_generator(frame_production_method, fps):
         while True:
@@ -38,6 +38,12 @@ def set_camera(channel):
     camera.set_channel(channel)
     success = camera.start_capture(verbose=False)
     return json.dumps({'success':success})
+    
+    
+@app.route('/stop_camera', methods=['GET'])
+def stop_camera():
+    camera.stop_capture()
+    return json.dumps({'success':True})
 
 
 @app.route('/set_imaging_parameters/<exposure>', methods=['GET'])

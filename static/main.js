@@ -67,6 +67,23 @@ angular
         console.log("Failed to communicate with server.");
       });
     };
+    
+    
+    $scope.stopCamera = function(){
+      ctrl.streamOff = true;
+      $http(
+        {
+        method: "GET",
+        url: "/stop_camera"
+      })
+      .then(
+        function successCallback(response) {
+        console.log(response.data.success)
+        }
+      , function errorCallback(response) {
+        console.log("Failed to communicate with server.");
+      });
+    };
 
 
     $scope.setImagingParameters = function(){
