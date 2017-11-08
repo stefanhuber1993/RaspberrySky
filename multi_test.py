@@ -1,8 +1,3 @@
-
-
-
-
-
 from threading import Thread
 import time
 from collections import deque

@@ -32,7 +32,7 @@
 
           <p>Select Input Camera</p>
           <md-radio-group layout="row" ng-model="cameraChoice" >
-            <md-radio-button ng-repeat="n in [-1,0,1,2]" value={{n}} class="md-primary">{{n}}</md-radio-button>
+            <md-radio-button ng-repeat="n in [0,1,2,3]" value={{n}} class="md-primary">{{n}}</md-radio-button>
           </md-radio-group>
 
           <md-button ng-click="setCamera()" class="md-primary">

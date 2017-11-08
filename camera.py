@@ -44,6 +44,7 @@ class Camera():
         base_command = ['v4l2-ctl', '--device', '/dev/video%s'%self.channel, '--set-ctrl']
         call(base_command + ['gain_automatic=0'])
         call(base_command + ['exposure=%s'%exposure])
+        print('clac')
 
     def _capture(self, deque, verbose):
         self.break_capture = False
